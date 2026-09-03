@@ -1,0 +1,65 @@
+<main class="page-shell">
+  <div class="hero-glow" aria-hidden="true"></div>
+
+  <header class="hero">
+    <p class="eyebrow">Tiny URL Shortener</p>
+    <h1>Snip</h1>
+    <p class="subtitle">Turn a long URL into a short, memorable link in seconds.</p>
+
+    <form class="shorten-form" (submit)="$event.preventDefault(); shortenUrl()">
+      <input
+        [value]="url()"
+        (input)="url.set($any($event.target).value)"
+        type="url"
+        placeholder="https://example.com"
+        aria-label="URL to shorten"
+      />
+      <button type="submit" [disabled]="loading()">
+        {{ loading() ? 'Creating...' : 'Shorten' }}
+      </button>
+    </form>
+
+    @if (error()) {
+      <div class="notice error">{{ error() }}</div>
+    }
+
+    @if (success()) {
+      <div class="notice success">{{ success() }}</div>
+    }
+  </header>
+
+  <section class="links-card">
+    <div class="card-header">
+      <h2>Recent Links</h2>
+    </div>
+
+    @if (links().length === 0) {
+      <p class="empty-state">No links yet. Add the first one above.</p>
+    } @else {
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Original URL</th>
+              <th>Hits</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (link of links(); track link.code) {
+              <tr>
+                <td>
+                  <a [href]="link.shortUrl" target="_blank" rel="noreferrer">
+                    {{ link.code }}
+                  </a>
+                </td>
+                <td class="original-url">{{ link.url }}</td>
+                <td>{{ link.hits }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</main>
