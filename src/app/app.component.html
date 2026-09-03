@@ -9,7 +9,7 @@
     <form class="shorten-form" (submit)="$event.preventDefault(); shortenUrl()">
       <input
         [value]="url()"
-        (input)="url.set($any($event.target).value)"
+        (input)="onUrlInput($any($event.target).value)"
         type="url"
         placeholder="https://example.com"
         aria-label="URL to shorten"
