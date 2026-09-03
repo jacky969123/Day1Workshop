@@ -1,14 +1,24 @@
 :root {
   color-scheme: dark;
-  font-family: Inter, "Segoe UI", sans-serif;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  background: #0b0b11;
-  color: #f5f7fb;
+  background: #0b0b0f;
+  color: #f5f6fa;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --bg: #0b0b0f;
+  --surface: rgba(18, 18, 24, 0.9);
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --text: #f5f6fa;
+  --text-muted: rgba(230, 232, 240, 0.68);
+  --text-faint: rgba(230, 232, 240, 0.48);
+  --accent-start: #ff7a59;
+  --accent-mid: #ff5d8f;
+  --accent-end: #ff4db8;
 }
 
 * {
@@ -16,13 +26,13 @@
 }
 
 html {
-  background: #0b0b11;
+  background: var(--bg);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: #0b0b11;
+  background: var(--bg);
 }
 
 button,
