@@ -1,0 +1,12 @@
+{
+  "name": "snip-bundle",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generated Snip release bundle (backend + built frontend, single process)",
+  "scripts": {
+    "start": "bun server.js"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  }
+}
