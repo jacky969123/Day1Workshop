@@ -152,6 +152,11 @@ const server = require('node:http').createServer(async (req, res) => {
     return;
   }
 
+  if (req.method === 'GET' && pathname === '/health') {
+    sendJson(res, 200, { status: 'ok' });
+    return;
+  }
+
   if (req.method === 'GET' && pathname === '/api/links') {
     const payload = [...links.values()].map((link) => ({ ...link }));
     sendJson(res, 200, payload);
