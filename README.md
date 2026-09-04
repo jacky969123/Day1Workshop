@@ -116,3 +116,20 @@ git push origin main
 ```
 
 Repeat the same three steps for `frontend` and `cli` as needed.
+
+## Generated release bundle
+
+The `bundle` branch (mounted at `bundle/`) is **generated output** — a
+self-contained, single-process build of the backend + built frontend, ready
+to deploy as-is (Docker/Railway). Never hand-edit files on that branch.
+
+Regenerate it with:
+
+```sh
+node scripts/build-bundle.mjs          # assemble locally, review the diff
+node scripts/build-bundle.mjs --push   # also commit + push bundle and main
+```
+
+The script updates `backend`/`frontend`/`cli` to their branch tips, builds
+the frontend, assembles `bundle/`, and is a safe no-op when nothing changed
+(no empty commits, no pushes). See `scripts/build-bundle.mjs` for details.
