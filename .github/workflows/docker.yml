@@ -1,0 +1,35 @@
+name: Docker build & push
+
+# The paths filter below watches `bundle` — the submodule GITLINK entry in the
+# superproject index — not files inside bundle/. Git only records a gitlink's
+# pointer commit in the superproject tree, so this workflow fires when the
+# bundle submodule pointer is bumped on main (i.e. after a real rebuild),
+# not on every commit made inside the bundle branch itself.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'bundle'
+  workflow_dispatch: {}
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: ./bundle
+          push: true
+          tags: ghcr.io/${{ github.repository }}:latest

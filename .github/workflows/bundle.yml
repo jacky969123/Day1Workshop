@@ -1,0 +1,33 @@
+name: Rebuild bundle
+
+# Schedule-only (plus manual dispatch) by design: the bundle branch is
+# generated output and does not need to rebuild on every backend/frontend/cli
+# push. Running on a schedule keeps it eventually-consistent without
+# triggering a rebuild storm across three independently-pushed branches.
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch: {}
+
+jobs:
+  build-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run build-bundle script
+        run: node scripts/build-bundle.mjs --push
+        env:
+          GIT_ASKPASS: echo
